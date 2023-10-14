@@ -1,3 +1,4 @@
+"use client"
 import {
 	Navbar as NextUINavbar,
 	NavbarContent,
@@ -17,7 +18,7 @@ import { link as linkStyles } from "@nextui-org/theme";
 import { siteConfig } from "@/config/site";
 import NextLink from "next/link";
 import clsx from "clsx";
-
+import { useClerk } from "@clerk/clerk-react";
 import { ThemeSwitch } from "@/components/theme-switch";
 import {
 	TwitterIcon,
@@ -28,39 +29,21 @@ import {
 } from "@/components/icons";
 
 import { Logo } from "@/components/icons";
+import { Heart, BellDot } from 'lucide-react';
+import { useAuth, UserButton } from "@clerk/nextjs";
 
 export const Navbar = () => {
-	const searchInput = (
-		<Input
-			aria-label="Search"
-			classNames={{
-				inputWrapper: "bg-default-100",
-				input: "text-sm",
-			}}
-			endContent={
-				<Kbd className="hidden lg:inline-block" keys={["command"]}>
-					K
-				</Kbd>
-			}
-			labelPlacement="outside"
-			placeholder="Search..."
-			startContent={
-				<SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-			}
-			type="search"
-		/>
-	);
-
+	const { userId } = useAuth()
 	return (
 		<NextUINavbar maxWidth="xl" position="sticky">
 			<NavbarContent className="basis-1/5 sm:basis-full" justify="start">
 				<NavbarBrand as="li" className="gap-3 max-w-fit">
 					<NextLink className="flex justify-start items-center gap-1" href="/">
-						<Logo />
-						<p className="font-bold text-inherit">ACME</p>
+						{/* <Logo /> */}
+						<p className="font-bold text-2xl font text-slate-600">DealDetective</p>
 					</NextLink>
 				</NavbarBrand>
-				<ul className="hidden lg:flex gap-4 justify-start ml-2">
+				{/* <ul className="hidden lg:flex gap-4 justify-start ml-2">
 					{siteConfig.navItems.map((item) => (
 						<NavbarItem key={item.href}>
 							<NextLink
@@ -75,7 +58,7 @@ export const Navbar = () => {
 							</NextLink>
 						</NavbarItem>
 					))}
-				</ul>
+				</ul> */}
 			</NavbarContent>
 
 			<NavbarContent
@@ -83,60 +66,54 @@ export const Navbar = () => {
 				justify="end"
 			>
 				<NavbarItem className="hidden sm:flex gap-2">
-					<Link isExternal href={siteConfig.links.twitter} aria-label="Twitter">
-						<TwitterIcon className="text-default-500" />
-					</Link>
-					<Link isExternal href={siteConfig.links.discord} aria-label="Discord">
-						<DiscordIcon className="text-default-500" />
-					</Link>
-					<Link isExternal href={siteConfig.links.github} aria-label="Github">
-						<GithubIcon className="text-default-500" />
-					</Link>
-					<ThemeSwitch />
+					<Button variant="flat"><ThemeSwitch /></Button>
 				</NavbarItem>
-				<NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
 				<NavbarItem className="hidden md:flex">
-					<Button
-            isExternal
-						as={Link}
-						className="text-sm font-normal text-default-600 bg-default-100"
-						href={siteConfig.links.sponsor}
-						startContent={<HeartFilledIcon className="text-danger" />}
-						variant="flat"
-					>
-						Sponsor
+					<Link href="/" aria-label="Like">
+						<Heart color="#ff0033" />
+					</Link>
+				</NavbarItem>
+				<NavbarItem className="hidden md:flex">
+					<Link href="/" aria-label="Like">
+						<BellDot color="#a5a1a1" />
+					</Link>
+				</NavbarItem>
+				{!userId ? <> <NavbarItem>
+					<Button as={Link} color="primary" href="/auth/sign-up" variant="flat">
+						Sign Up
 					</Button>
 				</NavbarItem>
+					<NavbarItem>
+						<Button as={Link} color="warning" href="/auth/sign-in" variant="flat">
+							Sign in
+						</Button>
+					</NavbarItem></> : <UserButton afterSignOutUrl="/" />}
 			</NavbarContent>
 
 			<NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-				<Link isExternal href={siteConfig.links.github} aria-label="Github">
-					<GithubIcon className="text-default-500" />
-				</Link>
-				<ThemeSwitch />
+				<Button variant="flat"><ThemeSwitch /></Button>
 				<NavbarMenuToggle />
 			</NavbarContent>
 
 			<NavbarMenu>
-				{searchInput}
 				<div className="mx-4 mt-2 flex flex-col gap-2">
-					{siteConfig.navMenuItems.map((item, index) => (
-						<NavbarMenuItem key={`${item}-${index}`}>
-							<Link
-								color={
-									index === 2
-										? "primary"
-										: index === siteConfig.navMenuItems.length - 1
-										? "danger"
-										: "foreground"
-								}
-								href="#"
-								size="lg"
-							>
-								{item.label}
-							</Link>
-						</NavbarMenuItem>
-					))}
+					<UserButton afterSignOutUrl="/" />
+					{siteConfig.navMenuItems.map((item, index) => {
+						if (userId && (index === 2 || index === 3)) {
+							return null; // Skip rendering items at index 2 and 3 if userId exists
+						}
+						return (
+							<NavbarMenuItem key={`${item}-${index}`}>
+								<Link
+									color={index === 2 || index === 3 ? "primary" : "foreground"}
+									href={item.href}
+									size="lg"
+								>
+									{item.label}
+								</Link>
+							</NavbarMenuItem>
+						);
+					})}
 				</div>
 			</NavbarMenu>
 		</NextUINavbar>

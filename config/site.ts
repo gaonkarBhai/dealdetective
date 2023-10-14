@@ -1,69 +1,37 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-	name: "Next.js + NextUI",
-	description: "Make beautiful websites regardless of your design experience.",
-	navItems: [
-		{
-			label: "Home",
-			href: "/",
-		},
+  name: "Deal Detective",
+  description: "Unlock the Secrets of Savings: Journey with Deal Detective",
+  navItems: [
+    // {
+    //   label: "Get Api",
+    //   href: "/",
+    // },
+  ],
+  navMenuItems: [
     {
-      label: "Docs",
-      href: "/docs",
+      label: "Favorites",
+      href: "/favorites",
     },
     {
-      label: "Pricing",
-      href: "/pricing",
+      label: "Notification",
+      href: "/notification",
     },
     {
-      label: "Blog",
-      href: "/blog",
+      label: "Sign In",
+      href: "/auth/sign-in",
     },
     {
-      label: "About",
-      href: "/about",
-    }
-	],
-	navMenuItems: [
-		{
-			label: "Profile",
-			href: "/profile",
-		},
-		{
-			label: "Dashboard",
-			href: "/dashboard",
-		},
-		{
-			label: "Projects",
-			href: "/projects",
-		},
-		{
-			label: "Team",
-			href: "/team",
-		},
-		{
-			label: "Calendar",
-			href: "/calendar",
-		},
-		{
-			label: "Settings",
-			href: "/settings",
-		},
-		{
-			label: "Help & Feedback",
-			href: "/help-feedback",
-		},
-		{
-			label: "Logout",
-			href: "/logout",
-		},
-	],
-	links: {
-		github: "https://github.com/nextui-org/nextui",
-		twitter: "https://twitter.com/getnextui",
-		docs: "https://nextui.org",
-		discord: "https://discord.gg/9b6yyZKmH4",
-    sponsor: "https://patreon.com/jrgarciadev"
-	},
+      label: "Sign Up",
+      href: "/auth/sign-up",
+    },
+  ],
+  links: {
+    github: "https://github.com/gaonkarBhai/",
+    twitter: "https://twitter.com/getnextui",
+    docs: "/",
+    discord: "https://discord.gg/9b6yyZKmH4",
+    sponsor: "https://patreon.com/jrgarciadev",
+  },
 };
