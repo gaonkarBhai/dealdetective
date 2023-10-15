@@ -42,12 +42,12 @@ const HeroCarousel = () => {
     return (
         <>
             <Swiper
+                modules={[Pagination]}
                 slidesPerView={4}
                 spaceBetween={30}
                 pagination={{
                     clickable: true,
                 }}
-                modules={[Pagination]}
                 className="mySwiper"
             >
                 {heroImgs.map((prod) => (
