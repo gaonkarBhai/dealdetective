@@ -33,7 +33,7 @@ import { Heart, BellDot } from 'lucide-react';
 import { useAuth, UserButton } from "@clerk/nextjs";
 
 export const Navbar = () => {
-	const { userId } = useAuth()
+	// const { userId } = useAuth()
 	return (
 		<NextUINavbar maxWidth="xl" position="sticky">
 			<NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -78,7 +78,7 @@ export const Navbar = () => {
 						<BellDot color="#a5a1a1" />
 					</Link>
 				</NavbarItem>
-				{!userId ? <> <NavbarItem>
+				{/* {!userId ? <> <NavbarItem>
 					<Button as={Link} color="primary" href="/auth/sign-up" variant="flat">
 						Sign Up
 					</Button>
@@ -87,7 +87,7 @@ export const Navbar = () => {
 						<Button as={Link} color="warning" href="/auth/sign-in" variant="flat">
 							Sign in
 						</Button>
-					</NavbarItem></> : <UserButton afterSignOutUrl="/" />}
+					</NavbarItem></> : <UserButton afterSignOutUrl="/" />} */}
 			</NavbarContent>
 
 			<NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
@@ -98,7 +98,7 @@ export const Navbar = () => {
 			<NavbarMenu>
 				<div className="mx-4 mt-2 flex flex-col gap-2">
 					<UserButton afterSignOutUrl="/" />
-					{siteConfig.navMenuItems.map((item, index) => {
+					{/* {siteConfig.navMenuItems.map((item, index) => {
 						if (userId && (index === 2 || index === 3)) {
 							return null; // Skip rendering items at index 2 and 3 if userId exists
 						}
@@ -113,7 +113,7 @@ export const Navbar = () => {
 								</Link>
 							</NavbarMenuItem>
 						);
-					})}
+					})} */}
 				</div>
 			</NavbarMenu>
 		</NextUINavbar>

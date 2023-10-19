@@ -13,7 +13,8 @@ export default function INPUT() {
     const [buttonClicked, setButtonClicked] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false)
 
-    const amazonUrlRegex = /^https?:\/\/(www\.)?amazon\.(com|ca|co\.uk|de|fr|es|it|com\.au|com\.br|com\.mx|nl|sg|ae|in|jp|se|tr|com\.tr|com\.tw|cn|sa)\b/i;
+    const amazonUrlRegex = /^https?:\/\/(www\.)?amazon\.(com|ca|co\.uk|de|fr|es|it|com\.au|com\.br|com\.mx|nl|sg|ae|in|jp|se|tr|com\.tr|com\.tw|cn|sa|nl)\b/i;
+
 
     const validateEmail = (value:any) => value.match(amazonUrlRegex);
 

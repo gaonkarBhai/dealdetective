@@ -50,8 +50,8 @@ const HeroCarousel = () => {
                 }}
                 className="mySwiper"
             >
-                {heroImgs.map((prod) => (
-                    <SwiperSlide key={prod.alt}>
+                {heroImgs.map((prod,i) => (
+                    <SwiperSlide key={i}>
                         <Card className="py-4">
                             <CardHeader className="pb-0 pt-2 px-4 justify-between flex space-x-3 items-start">
                                 <div className="flex-col items-start">
