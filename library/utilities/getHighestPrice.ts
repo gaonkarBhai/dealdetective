@@ -1,5 +1,6 @@
 import { PriceHistoryItem } from "@/types";
 
+// find the highest price in a list of price history items
 export function getHighestPrice(priceList: PriceHistoryItem[]) {
   let highestPrice = priceList[0];
 

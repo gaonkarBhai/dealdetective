@@ -7,13 +7,16 @@ import { extractCurrancy } from "../utilities/extractCurrancy";
 import { extractDescription } from "../utilities/extractDescription";
 
 export async function scrapeAmazonProduct(productUrl: string) {
+
   if (!productUrl) return;
 
+  // Bright Data proxy service
   const userName = String(process.env.BRIGHT_DATA_USER_ID);
   const password = String(process.env.BRIGHT_DATA_PASSWORD);
   const port = 22225;
   const sessionId = Math.floor(Math.random() * 500000);
 
+  // configuration options for the proxy request.
   const options = {
     auth: {
       username: `${userName}-session-${sessionId}`,
@@ -23,7 +26,9 @@ export async function scrapeAmazonProduct(productUrl: string) {
     port,
     rejectUnauthorized: false,
   };
+
   try {
+    
     const res = await axios.get(productUrl, options);
     const $ = cheerio.load(res.data);
 
@@ -53,8 +58,8 @@ export async function scrapeAmazonProduct(productUrl: string) {
       "";
     const imageUrls = Object.keys(JSON.parse(images));
     const description = extractDescription($);
-    
-    //
+
+    // res object
     const data = {
       url: productUrl,
       title,

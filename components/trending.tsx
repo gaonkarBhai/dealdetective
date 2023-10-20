@@ -6,8 +6,8 @@ const Trending = () => {
         <h2 className="">Trending</h2>
         <div className='flex flex-wrap gap-x-8 gap-y-16'>
           {
-            ["apple i phone", "Mackbook", "i Watch"].map((product)=>(
-              <div>{product}</div>
+            ["apple i phone", "Mackbook", "i Watch"].map((product,i)=>(
+              <div key={i}>{product}</div>
             ))
           }
         </div>

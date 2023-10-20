@@ -1,5 +1,6 @@
 import { PriceHistoryItem } from "@/types";
 
+// Returns the lowest price from a list of price history items
 export function getLowestPrice(priceList: PriceHistoryItem[]) {
   let lowestPrice = priceList[0];
 
