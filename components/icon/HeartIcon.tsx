@@ -6,6 +6,13 @@ export const HeartIcon = ({
     strokeWidth = 1.5,
     fill = "none",
     ...props
+}: {
+    size?: number;
+    width?: number | undefined;
+    height?: number;
+    strokeWidth?: number;
+    fill?: string;
+    props?: any;
 }) => (
     <svg
         aria-hidden="true"

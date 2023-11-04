@@ -70,6 +70,8 @@ const HeroCarousel = () => {
                                         <HeartIcon
                                             className={liked ? "[&>path]:stroke-transparent" : ""}
                                             fill={liked ? "red" : ""}
+                                            width={24}
+                                            height={24}
                                         />
                                     </Button>
                                 </div>

@@ -28,7 +28,7 @@ export async function scrapeAmazonProduct(productUrl: string) {
   };
 
   try {
-    
+
     const res = await axios.get(productUrl, options);
     const $ = cheerio.load(res.data);
 
@@ -77,6 +77,8 @@ export async function scrapeAmazonProduct(productUrl: string) {
     };
 
     console.log(data);
+    return data;
+    
   } catch (error: any) {
     console.log(error);
     throw new Error("Error scraping product : BrightData");

@@ -6,9 +6,9 @@ import { Button } from "@nextui-org/react";
 import { Link2 } from 'lucide-react';
 import { SendHorizontal } from 'lucide-react';
 import { scrapeAmazonProduct } from "@/library/scraper";
+import { scrapeAndStoreProduct } from "@/library/actions";
 
 export default function INPUT() {
-
     const [value, setValue] = React.useState("");
     const [buttonClicked, setButtonClicked] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false)
@@ -31,7 +31,7 @@ export default function INPUT() {
         if (validateEmail(value)){
             try {
                 setIsLoading(true)
-                const product = await scrapeAmazonProduct(value);
+                const product = await scrapeAndStoreProduct(value);
 
             } catch (error) {
                 console.log(error);
