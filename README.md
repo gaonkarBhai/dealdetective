@@ -1,1 +1,1 @@
-# Deal detective
+# Deal Detective

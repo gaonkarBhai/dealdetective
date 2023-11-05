@@ -10,7 +10,7 @@ import { connectToDb } from "../database/conn";
 
 export async function scrapeAndStoreProduct(productUrl: string) {
   if (!productUrl) return;
-  
+
   try {
     connectToDb();
 
@@ -33,18 +33,40 @@ export async function scrapeAndStoreProduct(productUrl: string) {
         averagePrice: getAveragePrice(updatedPriceHistory),
       };
     }
-    
+
     const newProduct = await Product.findOneAndUpdate(
       { url: scrapedProduct.url },
       product,
       { upsert: true, new: true }
     );
-    
+
     console.log(newProduct);
 
     revalidatePath(`/products/${newProduct._id}`);
   } catch (error: any) {
     console.log(error);
     throw new Error("Error in scraped product");
+  }
+}
+
+export async function getProductById(productId:string) {
+  try {
+    connectToDb();
+    const product = await Product.findOne({_id:productId})
+    if(!product) return null;
+    return product
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error in get product by id");
+  }
+}
+
+export async function getAllProducts() {
+  try {
+    connectToDb();
+    const products = await Product.find();
+    return products;
+  } catch (error) {
+    console.log(error);
   }
 }

@@ -23,7 +23,7 @@ export default function Error({
           () => reset()
         }
       >
-        Try again
+        Try again(see the browser console for more information).
       </button>
     </div>
   )
