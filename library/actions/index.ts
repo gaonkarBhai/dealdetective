@@ -54,6 +54,7 @@ export async function getProductById(productId:string) {
     connectToDb();
     const product = await Product.findOne({_id:productId})
     if(!product) return null;
+    console.log(product);
     return product
   } catch (error) {
     console.log(error);
