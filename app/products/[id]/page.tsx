@@ -1,16 +1,20 @@
-import { getProductById } from "@/library/actions"
+import { getProductById, getSimilarProduct } from "@/library/actions"
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Heart, Eye, Share2, ChevronsDown, ChevronsUp, Activity, FilePieChart } from 'lucide-react';
+import { Heart, GanttChartSquare, Share2, ChevronsDown, ChevronsUp, Activity, FilePieChart, Star, PercentCircle, ExternalLink } from 'lucide-react';
+
 type Params = {
     params: {
         id: string
     }
 }
+
 export default async function ProductDetails({ params: { id } }: Params) {
 
     const product = await getProductById(id);
     if (!product) redirect('/')
+    const similarProduct = await getSimilarProduct(id)
+
     return (
         <div className="bg-black">
             <div className="pt-1">
@@ -46,11 +50,23 @@ export default async function ProductDetails({ params: { id } }: Params) {
                     <div className="mt-4 ">
                         {/* <h2 className=" text-gray-900">Product information</h2> */}
                         <h1 className="text-2xl text-white-700 text-opacity-50 sm:text-3xl">{product.title}</h1>
-
-
                         <div className="flex justify-between ">
-                            <Link href={product.url} className="text-sm text-blue-600 dark:text-blue-500 hover:underline mt-1">Follow the link to know more</Link>
+                            <div className="mt-2">
+                                <span className="bg-pink-500 text-pink-800 text-xs font-medium inline-flex items-center px-2.5 py-0.1 rounded-full dark:bg-pink-300 dark:text-pink-800 border border-pink-400">
+                                    <Star className="w-4 mr-1" />
+                                    4.7 out of 5
+                                </span>
+                                <span className="ml-1 bg-yellow-100 text-yellow-800 text-xs font-medium inline-flex items-center px-2.5 py-0.1 rounded-full dark:bg-yellow-300 dark:text-yellow-800 border border-yellow-400">
+                                    <GanttChartSquare className="w-4 mr-1" />
+                                    Review 700+
+                                </span>
+                                <span className="ml-1 bg-green-100 text-green-800 text-xs font-medium inline-flex items-center px-2.5 py-0.1 rounded-full dark:bg-green-300 dark:text-green-800 border border-green-400">
+                                    <PercentCircle className="w-4 mr-1" />
+                                    Discount {product.discount}%
+                                </span>
+                            </div>
                             <div className="flex gap-3">
+                                <Link href={product.url} target="_blank" className="text-sm text-blue-600 dark:text-blue-500 hover:underline"><ExternalLink /></Link>
                                 <div className="cursor-pointer ">
                                     <Heart color="red" />
                                 </div>
@@ -61,17 +77,9 @@ export default async function ProductDetails({ params: { id } }: Params) {
                         </div>
 
                         {/* Reviews */}
-                        <div className="mt-2">
-                            <h3 className="text-xs dark:text-purple-300">Reviews</h3>
-                            <div className="flex items-center">
-                                <p className="dark:text-indigo-300 text-sm">4.7 out of 5 stars</p>
-                                <div className="ml-2 text-xs font-medium text-indigo-600 hover:text-indigo-500">
-                                    (70 reviews)
-                                </div>
-                            </div>
-                        </div>
 
-                        <div className="mt-10">
+
+                        <div className="mt-3">
                             <div className="w-full p-4 text-center rounded-lg shadow sm:p-8 dark:bg-black-500 dark:border-blue-900">
                                 <div className="grid grid-cols-2 gap-2">
 
@@ -131,10 +139,10 @@ export default async function ProductDetails({ params: { id } }: Params) {
                 {/* Product info */}
                 <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
                     <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-                        {/* <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{product.title}</h1> */}
+                        <p className="text-blue-900 text-xl">Description</p>
                     </div>
 
-       
+
                     <div className="mt-4 lg:row-span-3 lg:mt-0">
                         <h2 className="sr-only">Product information</h2>
                         <p className="text-3xl tracking-tight text-gray-900">{product.lowestPrice}</p>
@@ -174,10 +182,39 @@ export default async function ProductDetails({ params: { id } }: Params) {
                     <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pr-8 lg:pt-6">
                         <div>
                             <div className="space-y-6">
-                                <p className="text-base text-gray-900">{product.description}</p>
+                                <p className="text-base text-white-300">{product.description}</p>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div className="grid grid-cols-2 gap-1">
+                    {similarProduct && similarProduct?.length > 0 && (
+                        similarProduct.map((item) =>
+                        (
+                        <Link href={`/products/${item._id}`} className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                            <img className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={item.image} alt={item.title} />
+                            <div className="flex flex-col justify-between p-4 leading-normal">
+                                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{item.title.slice(0,25)}...</h5>
+                                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{item.description.slice(0,90)}...</p>
+                                    <div className="mt-2">
+                                        <span className="bg-pink-500 text-pink-800 text-xs font-medium inline-flex items-center px-2.5 py-0.1 rounded-full dark:bg-pink-300 dark:text-pink-800 border border-pink-400">
+                                            <Star className="w-4 mr-1" />
+                                            4.7 out of 5
+                                        </span>
+                                        <span className="ml-1 bg-yellow-100 text-yellow-800 text-xs font-medium inline-flex items-center px-2.5 py-0.1 rounded-full dark:bg-yellow-300 dark:text-yellow-800 border border-yellow-400">
+                                            <GanttChartSquare className="w-4 mr-1" />
+                                            Review 700+
+                                        </span>
+                                        <span className="ml-1 bg-green-100 text-green-800 text-xs font-medium inline-flex items-center px-2.5 py-0.1 rounded-full dark:bg-green-300 dark:text-green-800 border border-green-400">
+                                            <PercentCircle className="w-4 mr-1" />
+                                            Discount {item.discount}%
+                                        </span>
+                                    </div>
+                            </div>
+                        </Link>
+                        )
+                        )
+                    )}
                 </div>
             </div>
         </div>
