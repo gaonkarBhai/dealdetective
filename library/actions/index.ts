@@ -5,8 +5,10 @@ import { scrapeAmazonProduct } from "../scraper";
 import { getAveragePrice } from "../utilities/getAveragePrice";
 import { getHighestPrice } from "../utilities/getHighestPrice";
 import { getLowestPrice } from "../utilities/getLowestPrice";
-import { connectToDb } from "../database/conn";
-import Product from "../database/models/product.model";
+import { connectToDb } from "../database/conn.ts";
+import Product from "../database/models/products";
+import { User } from "@/types";
+import { generateEmailBody, sendEmail } from "../sendgrid/sendMail";
 
 export async function scrapeAndStoreProduct(productUrl: string) {
   if (!productUrl) return;
@@ -72,6 +74,7 @@ export async function getAllProducts() {
     console.log(error);
   }
 }
+
 export async function getSimilarProduct(productId:string) {
   try {
     connectToDb();
@@ -79,6 +82,25 @@ export async function getSimilarProduct(productId:string) {
     if (!product) return null;
     const similarProd = await Product.find({_id:{$ne:productId}}).limit(4);
     return similarProd;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+export async function addUserEmail(productId:string,userEmail:string) {
+  try {
+    connectToDb();
+    const product = await Product.findById(productId)
+    if (!product) return null;
+    const existingUserEmail = product.users.some((user:User) => user.email === userEmail);
+    if(!existingUserEmail){
+      product.users.push({email:userEmail})
+      await product.save();
+      const emailBody = await generateEmailBody(product,"WELCOME");
+      await sendEmail(emailBody,[userEmail])
+    }
+    return ;
   } catch (error) {
     console.log(error);
   }

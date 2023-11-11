@@ -33,7 +33,7 @@ export type Product = {
   users?: User[];
 };
 
-export type NotificationType =
+export type MessageType =
   | "WELCOME"
   | "CHANGE_OF_STOCK"
   | "LOWEST_PRICE"

@@ -2,7 +2,7 @@ import { getProductById, getSimilarProduct } from "@/library/actions"
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Heart, GanttChartSquare, Share2, ChevronsDown, ChevronsUp, Activity, FilePieChart, Star, PercentCircle, ExternalLink } from 'lucide-react';
-
+import TrackProd from "@/components/trackProd";
 type Params = {
     params: {
         id: string
@@ -127,11 +127,8 @@ export default async function ProductDetails({ params: { id } }: Params) {
                                     </div>
                                 </div>
                             </div>
-                            <button className="relative w-full inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
-                                <span className="relative w-full px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                                    Track Product
-                                </span>
-                            </button>
+                            
+                            <TrackProd productId={id}/>
                         </div>
                     </div>
                 </div>
@@ -187,7 +184,7 @@ export default async function ProductDetails({ params: { id } }: Params) {
                         </div>
                     </div>
                 </div>
-                <div className="grid grid-cols-2 gap-1">
+                <div className="grid grid-cols-2 gap-2">
                     {similarProduct && similarProduct?.length > 0 && (
                         similarProduct.map((item) =>
                         (
