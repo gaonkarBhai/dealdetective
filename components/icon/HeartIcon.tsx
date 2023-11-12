@@ -1,27 +1,23 @@
 import React from "react";
 export const HeartIcon = ({
-    size = 24,
     width,
     height,
-    strokeWidth = 1.5,
     fill = "none",
     ...props
 }: {
-    size?: number;
-    width?: number | undefined;
-    height?: number;
-    strokeWidth?: number;
+    className?: string;
     fill?: string;
-    props?: any;
+    width?: number;
+    height?: number;
 }) => (
     <svg
         aria-hidden="true"
         fill={fill}
         focusable="false"
-        height={size || height}
+        height={24 || height}
         role="presentation"
         viewBox="0 0 24 24"
-        width={size || width}
+        width={24 || width}
         {...props}
     >
         <path
@@ -29,7 +25,7 @@ export const HeartIcon = ({
             stroke="currentColor"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth={strokeWidth}
+            strokeWidth={1.5}
         />
     </svg>
 );

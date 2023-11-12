@@ -1,4 +1,5 @@
 "use client"
+
 import {
 	Navbar as NextUINavbar,
 	NavbarContent,
@@ -9,41 +10,33 @@ import {
 	NavbarMenuItem,
 } from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
-import { Kbd } from "@nextui-org/kbd";
 import { Link } from "@nextui-org/link";
-import { Input } from "@nextui-org/input";
 
 import { link as linkStyles } from "@nextui-org/theme";
 
 import { siteConfig } from "@/config/site";
 import NextLink from "next/link";
 import clsx from "clsx";
-import { useClerk } from "@clerk/clerk-react";
+// import { useClerk } from "@clerk/clerk-react";
 import { ThemeSwitch } from "@/components/theme-switch";
-import {
-	TwitterIcon,
-	GithubIcon,
-	DiscordIcon,
-	HeartFilledIcon,
-	SearchIcon,
-} from "@/components/icons";
 
-import { Logo } from "@/components/icons";
+
 import { Heart, BellDot } from 'lucide-react';
 import { useAuth, UserButton } from "@clerk/nextjs";
 
+
 export const Navbar = () => {
-	// const { userId } = useAuth()
+	const { userId } = useAuth()
 	return (
 		<NextUINavbar maxWidth="xl" position="sticky">
 			<NavbarContent className="basis-1/5 sm:basis-full" justify="start">
 				<NavbarBrand as="li" className="gap-3 max-w-fit">
-					<NextLink className="flex justify-start items-center gap-1" href="/">
+					<Link className="flex justify-start items-center gap-1" href="/">
 						{/* <Logo /> */}
 						<p className="font-bold text-2xl font text-slate-600">DealDetective</p>
-					</NextLink>
+					</Link>
 				</NavbarBrand>
-				{/* <ul className="hidden lg:flex gap-4 justify-start ml-2">
+				<ul className="hidden lg:flex gap-4 justify-start ml-2">
 					{siteConfig.navItems.map((item) => (
 						<NavbarItem key={item.href}>
 							<NextLink
@@ -58,7 +51,7 @@ export const Navbar = () => {
 							</NextLink>
 						</NavbarItem>
 					))}
-				</ul> */}
+				</ul>
 			</NavbarContent>
 
 			<NavbarContent
@@ -78,16 +71,16 @@ export const Navbar = () => {
 						<BellDot color="#a5a1a1" />
 					</Link>
 				</NavbarItem>
-				{/* {!userId ? <> <NavbarItem>
+				{!userId ? <> <NavbarItem>
 					<Button as={Link} color="primary" href="/auth/sign-up" variant="flat">
 						Sign Up
 					</Button>
 				</NavbarItem>
 					<NavbarItem>
 						<Button as={Link} color="warning" href="/auth/sign-in" variant="flat">
-							Sign in
+							Sign In
 						</Button>
-					</NavbarItem></> : <UserButton afterSignOutUrl="/" />} */}
+					</NavbarItem></> : <UserButton afterSignOutUrl="/" />}
 			</NavbarContent>
 
 			<NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
@@ -98,7 +91,7 @@ export const Navbar = () => {
 			<NavbarMenu>
 				<div className="mx-4 mt-2 flex flex-col gap-2">
 					<UserButton afterSignOutUrl="/" />
-					{/* {siteConfig.navMenuItems.map((item, index) => {
+					{siteConfig.navMenuItems.map((item, index) => {
 						if (userId && (index === 2 || index === 3)) {
 							return null; // Skip rendering items at index 2 and 3 if userId exists
 						}
@@ -113,7 +106,7 @@ export const Navbar = () => {
 								</Link>
 							</NavbarMenuItem>
 						);
-					})} */}
+					})}
 				</div>
 			</NavbarMenu>
 		</NextUINavbar>

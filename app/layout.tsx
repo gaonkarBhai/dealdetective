@@ -31,9 +31,9 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		// <ClerkProvider appearance={{
-		// 	baseTheme: dark
-		// }}>
+		<ClerkProvider appearance={{
+			baseTheme: dark
+		}}>
 
 		<html lang="en" suppressHydrationWarning>
 			<head />
@@ -64,6 +64,6 @@ export default function RootLayout({
 				</Providers>
 			</body>
 		</html>
-		// </ClerkProvider>
+		</ClerkProvider>
 	);
 }
