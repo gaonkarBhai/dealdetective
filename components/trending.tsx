@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { getAllProducts } from '../library/actions/index'
+import Image from 'next/image';
 
 const Trending = async () => {
 
@@ -12,10 +13,9 @@ const Trending = async () => {
       <div className="grid grid-cols-3 gap-2">
         {
           allProducts?.map((item, index) => (
-              <Link href={`/products/${item._id}`}>
-
+            <Link href={`/products/${item._id}`} key={index}>
             <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <img className="p-8 rounded-t-lg" src={item.image} alt="product image" />
+                <Image width={382} height={382} className="p-8 rounded-t-lg" src={item.image} alt="product image" />
               <div className="px-2 pb-2">
                   <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{item.title.slice(0, 35)}...</h5>
                 <div className="flex items-center mt-2.5 mb-2">
@@ -43,9 +43,6 @@ const Trending = async () => {
               </div>
             </div>
             </Link>
-
-
-
           ))
         }
       </div>

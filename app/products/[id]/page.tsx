@@ -3,6 +3,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Heart, GanttChartSquare, Share2, ChevronsDown, ChevronsUp, Activity, FilePieChart, Star, PercentCircle, ExternalLink } from 'lucide-react';
 import TrackProd from "@/components/trackProd";
+import Image from 'next/image';
+
 type Params = {
     params: {
         id: string
@@ -10,7 +12,7 @@ type Params = {
 }
 
 export default async function ProductDetails({ params: { id } }: Params) {
-    
+
     const product = await getProductById(id);
     if (!product) redirect('/')
     const similarProduct = await getSimilarProduct(id)
@@ -42,7 +44,9 @@ export default async function ProductDetails({ params: { id } }: Params) {
                 {/* Image gallery */}
                 <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
                     <div className="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
-                        <img
+                        <Image
+                            width={624}
+                            height={624}
                             src={product.image}
                             alt={product.image}
                             className="h-full w-full object-cover object-center"
@@ -128,7 +132,7 @@ export default async function ProductDetails({ params: { id } }: Params) {
                                     </div>
                                 </div>
                             </div>
-                            
+
                             {id !== undefined && <TrackProd productId={id.toString()} />}
 
                         </div>
@@ -136,7 +140,7 @@ export default async function ProductDetails({ params: { id } }: Params) {
                 </div>
 
                 {/* Product info */}
-                <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
+                <div className="mx-auto max-w-2xl px-4 pb-5 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
                     <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
                         <p className="text-blue-900 text-xl">Description</p>
                     </div>
@@ -178,7 +182,7 @@ export default async function ProductDetails({ params: { id } }: Params) {
                         </form>
                     </div>
 
-                    <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pr-8 lg:pt-6">
+                    <div className="py-5 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pr-8 lg:pt-6">
                         <div>
                             <div className="space-y-6">
                                 <p className="text-base text-white-300">{product.description}</p>
@@ -190,11 +194,11 @@ export default async function ProductDetails({ params: { id } }: Params) {
                     {similarProduct && similarProduct?.length > 0 && (
                         similarProduct.map((item) =>
                         (
-                        <Link href={`/products/${item._id}`} className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-                            <img className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={item.image} alt={item.title} />
-                            <div className="flex flex-col justify-between p-4 leading-normal">
-                                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{item.title.slice(0,25)}...</h5>
-                                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{item.description.slice(0,90)}...</p>
+                            <Link href={`/products/${item._id}`} className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                <Image width={624} height={624} className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={item.image} alt={item.title} />
+                                <div className="flex flex-col justify-between p-4 leading-normal">
+                                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{item.title.slice(0, 25)}...</h5>
+                                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{item.description.slice(0, 90)}...</p>
                                     <div className="mt-2">
                                         <span className="bg-pink-500 text-pink-800 text-xs font-medium inline-flex items-center px-2.5 py-0.1 rounded-full dark:bg-pink-300 dark:text-pink-800 border border-pink-400">
                                             <Star className="w-4 mr-1" />
@@ -209,8 +213,8 @@ export default async function ProductDetails({ params: { id } }: Params) {
                                             Discount {item.discount}%
                                         </span>
                                     </div>
-                            </div>
-                        </Link>
+                                </div>
+                            </Link>
                         )
                         )
                     )}
