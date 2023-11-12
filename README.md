@@ -5,8 +5,8 @@ Monitor Amazon product prices in real-time and receive instant notifications in 
 ## Getting Started
 1. Clone the repository.
 2. Install dependencies with `npm install` .
-3. Set up environment variables for MongoDB, SendGrid, and Bright Data.
-it .env should look like this:
+3. Set up environment variables for MongoDB, SendGrid, and Bright Data and clerk
+the .env should look like this:
 ```
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
