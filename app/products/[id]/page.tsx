@@ -192,9 +192,9 @@ export default async function ProductDetails({ params: { id } }: Params) {
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                     {similarProduct && similarProduct?.length > 0 && (
-                        similarProduct.map((item) =>
+                        similarProduct.map((item,i) =>
                         (
-                            <Link href={`/products/${item._id}`} className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                            <Link href={`/products/${item._id}`} key={i} className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
                                 <Image width={624} height={624} className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src={item.image} alt={item.title} />
                                 <div className="flex flex-col justify-between p-4 leading-normal">
                                     <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{item.title.slice(0, 25)}...</h5>
