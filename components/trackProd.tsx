@@ -3,15 +3,20 @@
 import { addUserEmail } from "@/library/actions";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input } from "@nextui-org/react";
 import { Truck, Mail } from 'lucide-react';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+interface TrackProdProps {
+    productId?: string;
+}
 
-const TrackProd = ({id}:string) => {
+const TrackProd = ({ productId }: TrackProdProps) => {
+    
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [value, setValue] = useState("");
-    const handleClick = async ()=>{
-        console.log(value);
-        await addUserEmail(id, value)
+    const handleClick = async () => {
+        if(!productId) return ;
+        console.log(value, productId);
+        await addUserEmail(productId, value)
     }
 
     return (
@@ -51,10 +56,13 @@ const TrackProd = ({id}:string) => {
                                 />
                             </ModalBody>
                             <ModalFooter>
-                                <Button color="danger" variant="light" onPress={onClose}>
+                                <Button color="danger" variant="light" onPress={onClose}  >
                                     Close
                                 </Button>
-                                <Button color="primary" variant="flat" onPress={onClose}>
+                                <Button color="primary" variant="flat" onPress={() => {
+                                    handleClick()
+                                    onClose()
+                                }}>
                                     Track
                                 </Button>
                             </ModalFooter>

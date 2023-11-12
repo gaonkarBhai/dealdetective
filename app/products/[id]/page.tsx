@@ -10,10 +10,11 @@ type Params = {
 }
 
 export default async function ProductDetails({ params: { id } }: Params) {
-
+    
     const product = await getProductById(id);
     if (!product) redirect('/')
     const similarProduct = await getSimilarProduct(id)
+    // console.log(id);
 
     return (
         <div className="bg-black">
@@ -128,7 +129,8 @@ export default async function ProductDetails({ params: { id } }: Params) {
                                 </div>
                             </div>
                             
-                            <TrackProd productId={id}/>
+                            {id !== undefined && <TrackProd productId={id.toString()} />}
+
                         </div>
                     </div>
                 </div>

@@ -5,7 +5,7 @@ import { scrapeAmazonProduct } from "../scraper";
 import { getAveragePrice } from "../utilities/getAveragePrice";
 import { getHighestPrice } from "../utilities/getHighestPrice";
 import { getLowestPrice } from "../utilities/getLowestPrice";
-import { connectToDb } from "../database/conn.ts";
+import { connectToDb } from "../database/conn";
 import Product from "../database/models/products";
 import { User } from "@/types";
 import { generateEmailBody, sendEmail } from "../sendgrid/sendMail";
@@ -25,7 +25,7 @@ export async function scrapeAndStoreProduct(productUrl: string) {
     if (existingProduct) {
       const updatedPriceHistory: any = [
         ...existingProduct.priceHistory,
-        { priceHistory: scrapedProduct.currentPrice },
+        { price: scrapedProduct.currentPrice },
       ];
       product = {
         ...scrapedProduct,
@@ -52,13 +52,13 @@ export async function scrapeAndStoreProduct(productUrl: string) {
   }
 }
 
-export async function getProductById(productId:string) {
+export async function getProductById(productId: string) {
   try {
     connectToDb();
-    const product = await Product.findOne({_id:productId})
-    if(!product) return null;
+    const product = await Product.findOne({ _id: productId });
+    if (!product) return null;
     // console.log(product);
-    return product
+    return product;
   } catch (error) {
     console.log(error);
     throw new Error("Error in get product by id");
@@ -75,32 +75,43 @@ export async function getAllProducts() {
   }
 }
 
-export async function getSimilarProduct(productId:string) {
+export async function getSimilarProduct(productId: string) {
   try {
     connectToDb();
-    const product = await Product.findOne({_id:productId})
+    const product = await Product.findOne({ _id: productId });
     if (!product) return null;
-    const similarProd = await Product.find({_id:{$ne:productId}}).limit(4);
+    const similarProd = await Product.find({ _id: { $ne: productId } }).limit(
+      4
+    );
     return similarProd;
   } catch (error) {
     console.log(error);
   }
 }
 
-
-export async function addUserEmail(productId:string,userEmail:string) {
+export async function addUserEmail(productId: string, userEmail: string) {
   try {
     connectToDb();
-    const product = await Product.findById(productId)
+    const product = await Product.findOne({ _id: productId });
+    console.log(
+      "inside addUserEmail",
+      product,
+      productId,
+      "email>>",
+      userEmail
+    );
+
     if (!product) return null;
-    const existingUserEmail = product.users.some((user:User) => user.email === userEmail);
-    if(!existingUserEmail){
-      product.users.push({email:userEmail})
+    const existingUserEmail = product.users.some(
+      (user: User) => user.email === userEmail
+    );
+    if (!existingUserEmail) {
+      product.users.push({ email: userEmail });
       await product.save();
-      const emailBody = await generateEmailBody(product,"WELCOME");
-      await sendEmail(emailBody,[userEmail])
+      const emailBody = await generateEmailBody(product, "WELCOME");
+      await sendEmail(emailBody, [userEmail]);
     }
-    return ;
+    return;
   } catch (error) {
     console.log(error);
   }

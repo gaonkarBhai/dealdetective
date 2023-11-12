@@ -15,7 +15,7 @@ export type User = {
 export type Product = {
   _id?: string;
   url: string;
-  currency: string;
+  currancy: string;
   image: string;
   title: string;
   currentPrice: number;
@@ -24,7 +24,7 @@ export type Product = {
   highestPrice: number;
   lowestPrice: number;
   averagePrice: number;
-  discountRate: number;
+  discount: number;
   description: string;
   category: string;
   reviewsCount: number;
@@ -47,4 +47,5 @@ export type EmailContent = {
 export type EmailProductInfo = {
   title: string;
   url: string;
+  image:string;
 };
