@@ -3,6 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Heart, GanttChartSquare, Share2, ChevronsDown, ChevronsUp, Activity, FilePieChart, Star, PercentCircle, ExternalLink } from 'lucide-react';
 import TrackProd from "@/components/trackProd";
+import DescriptionProvider from "@/components/descriptionProvider";
 import Image from 'next/image';
 
 type Params = {
@@ -185,7 +186,7 @@ export default async function ProductDetails({ params: { id } }: Params) {
                     <div className="py-5 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pr-8 lg:pt-6">
                         <div>
                             <div className="space-y-6">
-                                <p className="text-base text-white-300">{product.description}</p>
+                               {product.description !== undefined &&  <DescriptionProvider description={product.description}/>}
                             </div>
                         </div>
                     </div>

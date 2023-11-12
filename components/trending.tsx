@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import { getAllProducts } from '../library/actions/index'
 import Image from 'next/image';
+import React from 'react';
 
-const Trending = async () => {
+const Trending: React.FC = async (): ReactElement<any, any> => {
 
   const allProducts = await getAllProducts();
   console.log(allProducts)
