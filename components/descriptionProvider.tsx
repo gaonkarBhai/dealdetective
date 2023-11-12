@@ -1,7 +1,7 @@
 "use client"
 
 import React,{useState} from 'react'
-const DescriptionProvider = ({description}:string) => {
+const DescriptionProvider = ({description}:any) => {
    const [readMore,setReadMore] = useState(false)
   return (
     <p className="text-base text-white-300">{

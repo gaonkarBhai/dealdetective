@@ -5,6 +5,7 @@ import { Heart, GanttChartSquare, Share2, ChevronsDown, ChevronsUp, Activity, Fi
 import TrackProd from "@/components/trackProd";
 import DescriptionProvider from "@/components/descriptionProvider";
 import Image from 'next/image';
+import Charts from "@/components/charts";
 
 type Params = {
     params: {
@@ -17,7 +18,6 @@ export default async function ProductDetails({ params: { id } }: Params) {
     const product = await getProductById(id);
     if (!product) redirect('/')
     const similarProduct = await getSimilarProduct(id)
-    // console.log(id);
 
     return (
         <div className="bg-black">
@@ -147,41 +147,7 @@ export default async function ProductDetails({ params: { id } }: Params) {
                     </div>
 
 
-                    <div className="mt-4 lg:row-span-3 lg:mt-0">
-                        <h2 className="sr-only">Product information</h2>
-                        <p className="text-3xl tracking-tight text-gray-900">{product.lowestPrice}</p>
-
-                        {/* Reviews */}
-                        <div className="mt-6">
-                            <h3 className="sr-only">Reviews</h3>
-                            <div className="flex items-center">
-                                <div className="flex items-center">
-
-                                </div>
-                                <p className="sr-only">4.7 out of 5 stars</p>
-                                <a href="/" className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                                    70 reviews
-                                </a>
-                            </div>
-                        </div>
-
-                        <form className="mt-10">
-                            <div>
-                                <h3 className="text-sm font-medium text-gray-900">Color</h3>
-                            </div>
-                            <div className="mt-10">
-                                <div className="flex items-center justify-between">
-                                    <h3 className="text-sm font-medium text-gray-900">Size</h3>
-                                    <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                                        Size guide
-                                    </a>
-                                </div>
-
-                            </div>
-
-
-                        </form>
-                    </div>
+                    {product !== undefined &&  <Charts />}
 
                     <div className="py-5 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pr-8 lg:pt-6">
                         <div>
